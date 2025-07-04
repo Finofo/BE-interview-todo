@@ -6,6 +6,8 @@ from typing import Optional
 from sqlalchemy import Boolean, DateTime, String, Text, Uuid
 from sqlalchemy.orm import Mapped, mapped_column
 
+from app.utils.date_time_utils import datetime_now
+
 from ..database import Base
 
 
@@ -21,10 +23,13 @@ class TodoItem(Base):
     description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     is_completed: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=datetime.utcnow, nullable=False
+        DateTime, default=datetime_now, nullable=False
     )
     updated_at: Mapped[datetime] = mapped_column(
-        DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False
+        DateTime,
+        default=datetime_now,
+        onupdate=datetime_now,
+        nullable=False,
     )
 
     def __repr__(self) -> str:
