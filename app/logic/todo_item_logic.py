@@ -22,23 +22,17 @@ def get_todo_item_by_id(session: Session, todo_id: uuid.UUID) -> Optional[TodoIt
     return query.first()
 
 
-def list_todo_items(
-    session: Session, completed: Optional[bool] = None
-) -> list[TodoItem]:
+def list_todo_items(session: Session) -> list[TodoItem]:
     """
     Retrieve a list of TodoItems from the database with optional.
 
     Args:
         session: SQLAlchemy database session
-        completed: If provided, filter by completion status
 
     Returns:
         List of TodoItem objects
     """
     query = session.query(TodoItem)
-
-    if completed is not None:
-        query = query.filter(TodoItem.is_completed == completed)
 
     return query.order_by(TodoItem.created_at.desc()).all()
 
