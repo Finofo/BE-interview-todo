@@ -9,13 +9,19 @@ from app.api_schemas.todo import TodoItemCreate, TodoItemResponse
 router = APIRouter()
 
 
-@router.get("/todo/items", tags=["todo"])
-async def list_todo_items(
-    session: Session = Depends(get_session), response_model=list[TodoItemResponse]
-):
-    todo_items = todo_item_logic.list_todo_items(session)
+@router.get("/todo/items", tags=["todo"], response_model=list[TodoItemResponse])
+async def list_todo_items(session: Session = Depends(get_session)):
+    """
+    Retrieve a list of all todo items.
 
-    return todo_items
+    Parameters:
+    - **session**: Database session (injected automatically)
+
+    Returns:
+    - List of todo items with their details including title, description,
+      completion status, and timestamps
+    """
+    return todo_item_logic.list_todo_items(session)
 
 
 @router.post(
@@ -46,6 +52,19 @@ async def create_todo_item(
     response_model=TodoItemResponse,
 )
 async def get_todo_item(id: str, session: Session = Depends(get_session)):
+    """
+    Retrieve a specific todo item by its unique identifier.
+
+    Parameters:
+    - **id**: UUID string of the todo item to retrieve
+
+    Returns:
+    - Todo item details including title, description, completion status, and timestamps
+
+    Raises:
+    - **400 Bad Request**: If the provided ID is not a valid UUID format
+    - **404 Not Found**: If no todo item exists with the specified ID
+    """
     try:
         todo_id = uuid.UUID(id)
     except ValueError:
