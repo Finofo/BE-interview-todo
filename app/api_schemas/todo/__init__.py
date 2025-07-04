@@ -1,3 +1,3 @@
-from .todo_item import TodoItemCreate, TodoItemResponse
+from .todo_item_schema import TodoItemCreate, TodoItemResponse
 
 __all__ = ["TodoItemCreate", "TodoItemResponse"]

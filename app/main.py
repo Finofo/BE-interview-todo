@@ -1,8 +1,23 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 
+from .database import Base, engine
+from .models import *  # noqa
 from .routers import todo_items
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup: Create database tables
+    Base.metadata.create_all(bind=engine)
+    yield
+    # Shutdown: Add cleanup code here if needed
+    pass
+
+
+# Create a FastAPI application
+app = FastAPI(lifespan=lifespan)
 
 
 @app.get("/")

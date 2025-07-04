@@ -1,5 +1,7 @@
+from datetime import datetime
 from typing import Optional
-from pydantic import BaseModel, ConfigDict, Field
+from uuid import UUID
+from pydantic import BaseModel, ConfigDict, Field, field_serializer
 
 
 class TodoItemCreate(BaseModel):
@@ -21,11 +23,15 @@ class TodoItemResponse(BaseModel):
     Schema for todo item responses.
     """
 
-    id: str
+    id: UUID
     title: str
     description: Optional[str] = None
     is_completed: bool
-    created_at: str
-    updated_at: str
+    created_at: datetime
+    updated_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
+
+    @field_serializer("created_at", "updated_at")
+    def serialize_datetime(self, dt: datetime) -> str:
+        return dt.isoformat()

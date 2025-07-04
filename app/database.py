@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 
 # SQLite database URL
 # For a production app, this would be replaced with a more robust database like PostgreSQL
-SQLALCHEMY_DATABASE_URL = "sqlite:///./todo.db"
+SQLALCHEMY_DATABASE_URL = "sqlite:///./.todo.db"
 
 # Create engine
 engine = create_engine(
