@@ -12,6 +12,14 @@ The app does actually run.
 
 ## Running
 
+On a fresh checkout, intialize the venv:
+
+```sh
+uv venv
+```
+
+Run the dev server:
+
 ```sh
 uv run fastapi dev
 ```
