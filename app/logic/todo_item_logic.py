@@ -2,6 +2,7 @@ from typing_extensions import Optional
 import uuid
 from sqlalchemy.orm import Session
 
+from app.api_schemas.todo import TodoItemCreate
 from app.models.todo_item import TodoItem
 
 
@@ -40,3 +41,29 @@ def list_todo_items(
         query = query.filter(TodoItem.is_completed == completed)
 
     return query.order_by(TodoItem.created_at.desc()).all()
+
+
+def create_todo_item(session: Session, todo_item_create: TodoItemCreate) -> TodoItem:
+    """
+    Create a new TodoItem in the database.
+
+    Args:
+        session: SQLAlchemy database session
+        todo_create: Data for creating the new todo item
+
+    Returns:
+        The created TodoItem object
+    """
+    # Create a new TodoItem instance
+    todo_item = TodoItem(
+        title=todo_item_create.title,
+        description=todo_item_create.description,
+        is_completed=todo_item_create.is_completed,
+    )
+
+    # Add to session and commit to generate ID and timestamps
+    session.add(todo_item)
+    session.commit()
+    session.refresh(todo_item)
+
+    return todo_item
