@@ -8,3 +8,20 @@ dependencies = [
     "fastapi[standard]>=0.115.14",
     "sqlalchemy>=2.0.41",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.1",
+    "pytest-asyncio>=1.0.0",
+    "pytest-timeout>=2.4.0",
+]
+
+
+[tool.pytest.ini_options]
+addopts = "--import-mode=importlib"
+pythonpath = ["."]
+python_files = [
+    "tests/**/test_*.py",
+]
+timeout = 10
+asyncio_mode = "auto"

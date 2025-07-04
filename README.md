@@ -6,14 +6,20 @@ well as the lack of production database.  Everything else should be considered f
 
 The app does actually run.
 
-# Dependencies
+## Dependencies
 
 - [uv](https://docs.astral.sh/uv/)
 
-# Running
+## Running
 
 ```sh
 uv run fastapi dev
 ```
 
 Browse to http://127.0.0.1:8000
+
+## Running tests
+
+```sh
+uv run pytest
+```
