@@ -18,6 +18,8 @@ uv run fastapi dev
 
 Browse to http://127.0.0.1:8000
 
+Live docs can be found at http://127.0.0.1:8000/docs
+
 ## Running tests
 
 ```sh
