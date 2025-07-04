@@ -16,13 +16,6 @@ async def lifespan(app: FastAPI):
     pass
 
 
-# Create a FastAPI application
 app = FastAPI(lifespan=lifespan)
-
-
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
 
 app.include_router(todo_items)
